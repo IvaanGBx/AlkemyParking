@@ -15,8 +15,10 @@ fun main(args: Array<String>) {
     val vehicleCustom = Vehicle("AAA-99", VehicleType.BUS,  checkInTime = calendar)
     parking.addVehicle(vehicleCustom)
 
+    //Test excedent
     val calendar2 = Calendar.getInstance()
-    calendar2.set(Calendar.HOUR_OF_DAY, 11);
+    calendar2.set(Calendar.HOUR_OF_DAY, 14);
+    calendar2.set(Calendar.MINUTE, 0);
     val vehicleCustom2 = Vehicle("AAA-98", VehicleType.MOTORCYCLE, checkInTime = calendar2);
     parking.addVehicle(vehicleCustom2)
 

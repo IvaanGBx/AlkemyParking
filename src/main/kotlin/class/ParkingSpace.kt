@@ -2,6 +2,8 @@ package `class`
 import Vehicle
 import VehicleType
 import java.util.*
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.roundToInt
 
 data class ParkingSpace(val vehicle:Vehicle, val vehicles:MutableSet<Vehicle>) {
@@ -27,9 +29,10 @@ data class ParkingSpace(val vehicle:Vehicle, val vehicles:MutableSet<Vehicle>) {
     private fun calculateFee() : Int{
         val baseHours = Constants.HOUR_IN_MINS * 2
         var fee = vehicle.vehicleType.price
+
         if (parkedTime > baseHours){
             val excedentTime = (parkedTime - baseHours)
-            val blocks = (excedentTime / Constants.FRACTION_MINUTES).toDouble().roundToInt()
+            val blocks = ceil((excedentTime.toDouble() / Constants.FRACTION_MINUTES)).toInt()
             fee += (Constants.EXCEDENT_PRICE * blocks)
         }
 
