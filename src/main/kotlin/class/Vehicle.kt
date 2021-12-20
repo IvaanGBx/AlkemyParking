@@ -1,4 +1,7 @@
-data class Vehicle(val plate:String, val vehicleType:VehicleType, val discountCard:String? = null){
+import java.util.*
+
+data class Vehicle(val plate:String, val vehicleType:VehicleType, val discountCard:String? = null,
+                   val checkInTime: Calendar = Calendar.getInstance()){
 
     override fun equals(other: Any?): Boolean {
 
@@ -11,4 +14,5 @@ data class Vehicle(val plate:String, val vehicleType:VehicleType, val discountCa
     override fun hashCode(): Int {
         return this.plate.hashCode()
     }
+
 }

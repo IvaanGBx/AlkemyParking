@@ -3,4 +3,6 @@ enum class VehicleType(val price: Int) {
     MOTORCYCLE(15),
     SMALL_BUS(25),
     BUS(30)
+
+
 }
