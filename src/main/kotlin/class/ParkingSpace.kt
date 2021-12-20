@@ -5,40 +5,37 @@ import java.util.*
 import kotlin.math.roundToInt
 
 data class ParkingSpace(val vehicle:Vehicle, val vehicles:MutableSet<Vehicle>) {
-    val MINUTE_IN_MILIS = 60000 //TODO Move to constants
-    var HOUR_IN_MINS = 60
-    var FRACTION_MINUTES = 15
-    var EXCEDENT_PRICE = 5
+    private val parkedTime:Long
+    get() = (Calendar.getInstance().timeInMillis - vehicle.checkInTime.timeInMillis) / Constants.MINUTE_IN_MILIS
 
-    val parkedTime:Long
-    get() = (Calendar.getInstance().timeInMillis - vehicle.checkInTime.timeInMillis) / MINUTE_IN_MILIS
-
-    fun checkOutVehicle(plate:String){
-        val vehicleCheck = vehicles.firstOrNull { v -> v.plate == plate }
+    fun checkOutVehicle(){
+        val vehicleCheck = vehicles.firstOrNull { v -> v.plate == vehicle.plate }
         vehicleCheck?.let {
-            onSuccess(calculateFee(vehicle.vehicleType))
-            //TODO Detele Vehicle
+            onSuccess(calculateFee())
+            vehicles.remove(vehicle)
         } ?: onError()
-
     }
 
-    fun onSuccess(price:Int){
-        println(price)
+    private fun onSuccess(price:Int){
+        println("Your fee is $$price. Come back soon")
     }
 
-    fun onError(){
-        println("error")
+    private fun onError(){
+        println("Sorry, the check-out failed!")
     }
 
-    fun calculateFee(type: VehicleType) : Int{
-        val baseHours = HOUR_IN_MINS * 2
-        var fee = type.price
+    private fun calculateFee() : Int{
+        val baseHours = Constants.HOUR_IN_MINS * 2
+        var fee = vehicle.vehicleType.price
         if (parkedTime > baseHours){
             val excedentTime = (parkedTime - baseHours)
-            val blocks = (excedentTime / FRACTION_MINUTES).toDouble().roundToInt()
-            fee += (EXCEDENT_PRICE * blocks)
+            val blocks = (excedentTime / Constants.FRACTION_MINUTES).toDouble().roundToInt()
+            fee += (Constants.EXCEDENT_PRICE * blocks)
         }
 
+        vehicle.discountCard?.let {
+            fee = (fee * Constants.DISCOUNT).toInt()
+        }
         return fee
     }
 
