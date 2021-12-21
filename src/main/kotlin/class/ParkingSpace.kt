@@ -1,11 +1,8 @@
 package `class`
 import Parking
 import Vehicle
-import VehicleType
 import java.util.*
 import kotlin.math.ceil
-import kotlin.math.floor
-import kotlin.math.roundToInt
 
 data class ParkingSpace(val vehicle:Vehicle, val parking: Parking) {
     private val parkedTime:Long

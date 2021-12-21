@@ -1,5 +1,7 @@
 import java.util.*
-
+/*
+    Nullables values are defined using `?`
+*/
 data class Vehicle(val plate:String, val vehicleType:VehicleType, val discountCard:String? = null,
                    val checkInTime: Calendar = Calendar.getInstance()){
 

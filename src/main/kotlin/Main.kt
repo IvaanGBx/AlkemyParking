@@ -1,11 +1,8 @@
 import `class`.ParkingSpace
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-fun main(args: Array<String>) {
-
+fun main() {
     val parking = Parking(mutableSetOf())
 
     //Test
@@ -17,9 +14,9 @@ fun main(args: Array<String>) {
 
     //Test excedent
     val calendar2 = Calendar.getInstance()
-    calendar2.set(Calendar.HOUR_OF_DAY, 14);
-    calendar2.set(Calendar.MINUTE, 0);
-    val vehicleCustom2 = Vehicle("AAA-98", VehicleType.MOTORCYCLE, checkInTime = calendar2);
+    calendar2.set(Calendar.HOUR_OF_DAY, 14)
+    calendar2.set(Calendar.MINUTE, 0)
+    val vehicleCustom2 = Vehicle("AAA-98", VehicleType.MOTORCYCLE, checkInTime = calendar2)
     parking.addVehicle(vehicleCustom2)
 
     (0..20).forEach { i ->
@@ -34,4 +31,8 @@ fun main(args: Array<String>) {
     parkingSpace.checkOutVehicle()
 
     parking.showProfits()
+
+    parking.listVehicles().mapIndexed { index, plate ->
+        println("Vehicle ${index + 1}: $plate")
+    }
 }
