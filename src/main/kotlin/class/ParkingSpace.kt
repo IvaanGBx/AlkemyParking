@@ -1,4 +1,5 @@
 package `class`
+import Parking
 import Vehicle
 import VehicleType
 import java.util.*
@@ -6,15 +7,17 @@ import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-data class ParkingSpace(val vehicle:Vehicle, val vehicles:MutableSet<Vehicle>) {
+data class ParkingSpace(val vehicle:Vehicle, val parking: Parking) {
     private val parkedTime:Long
     get() = (Calendar.getInstance().timeInMillis - vehicle.checkInTime.timeInMillis) / Constants.MINUTE_IN_MILIS
 
     fun checkOutVehicle(){
-        val vehicleCheck = vehicles.firstOrNull { v -> v.plate == vehicle.plate }
+        val vehicleCheck = parking.vehicles.firstOrNull { v -> v.plate == vehicle.plate }
         vehicleCheck?.let {
-            onSuccess(calculateFee())
-            vehicles.remove(vehicle)
+            val price = calculateFee()
+            parking.updateProfits(price)
+            onSuccess(price)
+            parking.vehicles.remove(vehicle)
         } ?: onError()
     }
 

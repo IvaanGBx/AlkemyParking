@@ -30,6 +30,8 @@ fun main(args: Array<String>) {
         if(response) println("Welcome to AlkeParking!") else println("Sorry, the has check-in failed")
     }
 
-    val parkingSpace = ParkingSpace(vehicleCustom2, parking.vehicles)
+    val parkingSpace = ParkingSpace(vehicleCustom2, parking)
     parkingSpace.checkOutVehicle()
+
+    parking.showProfits()
 }
